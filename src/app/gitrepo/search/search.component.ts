@@ -1,30 +1,48 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {GitrepoService} from '../gitrepo.service';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
+import { fromEvent } from 'rxjs';
+import {
+  map,
+  debounceTime,
+  distinctUntilChanged,
+  startWith,
+  filter,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
+  @ViewChild('inputRef', { static: true }) inputRef: ElementRef;
+  @Output() inputValue = new EventEmitter();
+  @Output() buttonClick = new EventEmitter();
 
-  @Output() resultOutput = new EventEmitter();
-  @Output() resultRepo = new EventEmitter();
+  terms = '';
 
-  repoName = '';
-  resultRepo$: any;
-  response;
-
-  constructor(
-    private gitrepoService: GitrepoService
-  ) { }
+  constructor() {}
 
   ngOnInit(): void {
-    // this.resultOutput.emit('hi?fucking men');
+    const terms$ = fromEvent<any>(this.inputRef.nativeElement, 'input').pipe(
+      map((event) => event.target.value),
+      debounceTime(400),
+      distinctUntilChanged()
+    );
+
+    terms$.subscribe((result) => {
+      this.inputValue.emit(result);
+      this.terms = result;
+    });
   }
 
-  getRepo(name: string) {
-    this.resultRepo$ = this.gitrepoService.getRepo(name);
-    this.resultRepo.emit(this.resultRepo$);
+  onButtonClick() {
+    this.buttonClick.emit(this.terms);
   }
 }

@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { GitrepoService } from './gitrepo.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-gitrepo',
@@ -6,27 +8,22 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./gitrepo.component.scss']
 })
 export class GitrepoComponent implements OnInit {
+  resultRepo$: Observable<any>;
 
-  // @Input() resultRepo;
+  constructor(public gitrepoService: GitrepoService) { }
 
-  // result = '';
-  // arrRepo: any;
+  ngOnInit(): void {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  inputValue(value: string) {
+    this.getRepo(value);
   }
 
-  // getArrRepo() {
-  //   console.log(this.arrRepo);
-  // }
+  buttonClick(value: string) {
+    this.getRepo(value);
+  }
 
-  // resultOutputMetod(e) {
-  //   return this.result = `${e} fggg`;
-  // }
-  //
-  // getArrRepo(e) {
-  //   console.log(e);
-  //   return this.arrRepo;
-  // }
+  getRepo(value: string) {
+    this.resultRepo$ = this.gitrepoService.getRepo(value);
+    this.resultRepo$.subscribe(res => console.log(res));
+  }
 }

@@ -1,22 +1,27 @@
-<!--<app-search-->
-<!--  (resultOutput)="resultOutputMetod($event)"-->
-<!--  (resultRepo)="getArrRepo($event)"-->
-<!--&gt;</app-search>-->
-<!--<app-card-->
-<!--  [result]="result"-->
-<!--  [resultRepo]="arrRepo"-->
-<!--&gt;</app-card>-->
+<app-search
+  (inputValue)="inputValue($event)"
+  (buttonClick)="buttonClick($event)"
+></app-search>
 
-<!--<app-search (resultRepo)="getArrRepo()"></app-search>-->
-<app-search></app-search>
+<div class="" *ngIf="(resultRepo$ | async) as response">
 
-<!--<div-->
-<!--  *ngIf="(resultRepo | async) as response"-->
-<!--&gt;-->
-<!--  <ul>-->
-<!--    <li *ngFor="let responseInner of response.items">-->
-<!--      <p>Name {{ responseInner.name }}</p>-->
-<!--    </li>-->
-<!--  </ul>-->
+  <ng-container *ngIf="response.items.length; else noData">
+    <ul class="card">
+      <li class="card__item" *ngFor="let item of response.items">
+        <img [src]="item.owner.avatar_url" alt="www" class="card__img"/>
+        <a class="card__name">{{ item.name | titlecase }}</a>
+        <div class="card__body">
+          <p class="card__description">{{ item.description }}</p>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
+  <ng-template #noData>
+    <p>Данных нет</p>
+  </ng-template>
 
-<!--</div>-->
+</div>
+
+<div>
+  Загрузка...
+</div>

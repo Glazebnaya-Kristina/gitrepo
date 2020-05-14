@@ -3,33 +3,14 @@
     type="text"
     class="search__input"
     placeholder="Введите имя репо"
-    [(ngModel)]="repoName"
+    #inputRef
   >
   <button
     class="search__button button"
     type="button"
-    (click)="getRepo(repoName)"
+    (click)="onButtonClick()"
   >
     Начать поиск
   </button>
 </p>
 
-
-
-<div *ngIf="resultRepo$ === ''">
-  gggg
-</div>
-<div
-  *ngIf="(resultRepo$ | async) as response"
->
-  <ul class="card">
-    <li class="card__item" *ngFor="let responseInner of response.items">
-      <img [src]="responseInner.owner.avatar_url" alt="www" class="card__img"/>
-      <a class="card__name">{{ responseInner.name | titlecase }}</a>
-      <div class="card__body">
-        <p class="card__description">{{ responseInner.description }}</p>
-      </div>
-    </li>
-  </ul>
-
-</div>

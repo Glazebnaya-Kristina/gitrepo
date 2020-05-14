@@ -1,10 +1,27 @@
-<!--<div-->
-<!--  *ngIf="(resultRepo | async) as response"-->
-<!--&gt;-->
-<!--  <ul>-->
-<!--    <li *ngFor="let responseInner of response.items">-->
-<!--      <p>Name {{ responseInner.name }}</p>-->
-<!--    </li>-->
-<!--  </ul>-->
+<!-- <div -->
 
-<!--</div>-->
+  <!--  *ngIf="(resultRepo | async) as response"-->
+  <!--&gt;-->
+  <!--  <ul>-->
+  <!--    <li *ngFor="let responseInner of response.items">-->
+  <!--      <p>Name {{ responseInner.name }}</p>-->
+  <!--    </li>-->
+  <!--  </ul>-->
+
+<!-- </div> -->
+
+
+<!-- <ul class="card">
+  <li class="card__item" *ngFor="let responseInner of response.items">
+    <img [src]="responseInner.owner.avatar_url" alt="www" class="card__img"/>
+    <a class="card__name">{{ responseInner.name | titlecase }}</a>
+    <div class="card__body">
+      <p class="card__description">{{ responseInner.description }}</p>
+    </div>
+  </li>
+</ul>
+
+<div class="card">
+
+
+</div> -->
